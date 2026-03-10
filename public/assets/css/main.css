@@ -1,14 +1,23 @@
 #logo{
     height: 10vh;
     min-height: 7rem;
+    border-radius: 50%;
 }
 
 main {
-    flex: 1
+    flex: 1;
 }
 
 body {
     min-height: 95vh;
     display: flex;
     flex-direction: column;
+}
+
+.topics {
+    border: 2px solid #cac7c7;
+    padding: 20px;
+    padding-top: 0px;
+    margin-bottom: 30px;
+    border-radius: 8px;
 }

@@ -3,9 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/png" href="/assets/images/Niko.js.png">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+    <title>Week 1</title>
 </head>
 <body>
+    <nav>
+        <a href="/"> <img id="logo" src="/assets/images/Niko.js.png"> </a>
+        <a href="../about">About</a>
+        <a href="https://github.com/NikoZK/node_documentation">GitHub</a>
+    </nav>
 
+    <main>
+        <h1>Variables and datatypes</h1>
+        <section class="topics">
+        <h2>Variables</h2>
+        <h4>JavaScript has 3 ways of defining a variable(Realistically 2)</h4>
+        <p>
+            <code>const</code> is used for variables which do not want to be reassigned later. <br><br>
+            <code>let</code> is used for variables which want to be reassigned later. <br> <br>
+            <code>var</code> is just not used anymore avoid it. <br>
+            One of the biggest reasons is, that its function-scoped, not block-scoped.
+            This means that variables declared inside loops, if statements, or other blocks are not confined to that block, but can be accessed outside it, which can lead to bugs.
+            </p>
+            <pre>
+                <code>
+{
+    var someVariable = true;
+    {
+        var someVariable = false;
+    }
+    console.log(someVariable);
+}
+                </code>
+            </pre>
+            <p>
+                Here someVariable would log "false" because the inner <code>var</code> overrides the outer, because they are practically the same variable.
+            </p>
+            <pre>
+                <code>
+{
+    let someVariable = true;
+    {
+        let someVariable = false;
+    }
+    console.log(someVariable);
+}
+                </code>
+            </pre>
+            <p>
+                While using <code>let</code> instead it will log "true", because the inner <code>let</code> is not the same variable as the outer.
+            </p>
+        </section>
+
+        <section class="topics">
+            <h2>Type coercion</h2>
+            <h4>In JavaScript datatypes can automatically convert from one datatype to another if necessary.</h4>
+
+            <pre><code>
+5 + "10" = "510"
+"5" + 10 = "510"
+
+"5" - 2 = 3
+"5" * 2  = 10
+"5" / 2 = 2.5
+            </code></pre>
+            <p>
+                We can see that when using <code>+</code>, the coercion prefers Strings, thats because <code>+</code> is used for number addition AND String concatenation. <br>
+                While <code>-</code>, <code>*</code>, <code>/</code> and <code>%</code>only works with numbers, and therefore results in a Number coercion.
+            </p>
+            <pre>
+                <code>
+Boolean("True") = True
+Boolean("False") = True
+Boolean("") = False
+Boolean(0) = False
+Boolean(1) = True
+                </code>
+            </pre>
+            <p>
+                Booleans also do type coercion and will result True to everything EXCEPT falsy values. <br>
+                These are the only falsy values in JavaScript:
+            </p>
+            <pre>
+            <code>
+false
+0
+-0
+0n
+"" 
+null
+undefined
+NaN
+            </code>
+            </pre>
+            <p>
+                Everything else will equal True.
+            </p>
+        </section>
+
+        <section class="topics">
+            <h2>Strict and loose equality</h2>
+            <p>
+                If we want to avoid type coercion, we can use strict equality(<code> === </code>)<br>
+                Then JavaScript checks if BOTH the types and values are the same:
+            </p>
+            <pre>
+                <code>
+10 === 10 = true
+10 === "10" = false
+true === true = true
+true === 1 = false
+true === "true" = false
+false === false = true
+                </code>
+            </pre>
+            <p>
+                For comparison there is also loose equality (<code> == </code>), which does type coercion FIRST and then compares. <br>
+                Therefore all the examples above, would become true.
+            </p>
+        </section>
+
+        <section class="topics">
+        <h2>Datatypes</h2>
+        <h4>In JavaScript we have 8 datatypes</h4>
+        <p>
+            <ul>
+                <li>String - Text value</li>
+                <li>Boolean - True or false </li>
+                <li>Number - Numeric value</li>
+                <li>BigInt - Huge numeric value</li>
+                <li>Object - Key: Value pair</li>
+                <li>Symbol - Immutable and unique symbol value</li>
+                <li>null - Explicitly set to no value</li>
+                <li>undefinded - No value asssigned yet</li>
+            </ul>
+        </p>
+    </section>
+    </main>
+
+    
+    <footer>
+        <span id="copyright-year"></span>
+    </footer>
+    
+    <script src="/assets/js/footer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 </body>
 </html>
