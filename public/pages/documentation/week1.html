@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav>
-        <a href="/"> <img id="logo" src="/assets/images/Niko.js.png"> </a>
+        <a href="/"> <img id="logo" src="/assets/images/Niko.js.png"></a>
         <a href="../about">About</a>
         <a href="https://github.com/NikoZK/node_documentation">GitHub</a>
     </nav>
@@ -57,6 +57,23 @@
                 While using <code>let</code> instead it will log "true", because the inner <code>let</code> is not the same variable as the outer.
             </p>
         </section>
+
+                <section class="topics">
+        <h2>Datatypes</h2>
+        <h4>In JavaScript we have 8 datatypes</h4>
+        <p>
+            <ul>
+                <li>String - Text value</li>
+                <li>Boolean - True or false </li>
+                <li>Number - Numeric value</li>
+                <li>BigInt - Huge numeric value</li>
+                <li>Object - Key: Value pair</li>
+                <li>Symbol - Immutable and unique symbol value</li>
+                <li>null - Explicitly set to no value</li>
+                <li>undefinded - No value asssigned yet</li>
+            </ul>
+        </p>
+    </section>
 
         <section class="topics">
             <h2>Type coercion</h2>
@@ -127,21 +144,151 @@ false === false = true
         </section>
 
         <section class="topics">
-        <h2>Datatypes</h2>
-        <h4>In JavaScript we have 8 datatypes</h4>
-        <p>
-            <ul>
-                <li>String - Text value</li>
-                <li>Boolean - True or false </li>
-                <li>Number - Numeric value</li>
-                <li>BigInt - Huge numeric value</li>
-                <li>Object - Key: Value pair</li>
-                <li>Symbol - Immutable and unique symbol value</li>
-                <li>null - Explicitly set to no value</li>
-                <li>undefinded - No value asssigned yet</li>
-            </ul>
-        </p>
-    </section>
+            <h2>String defining</h2>
+            <p>
+                In javaScript we have 3 ways of defining a string <br>
+                Single qoutes: <code>''</code><br>
+                Double qoutes: <code>""</code><br>
+                Backticks: <code>``</code><br>
+                You cannot use single or double qoutes inside of single or double qoutes, that would end the string. Therefore we can use single qoutes inside of double qoutes or double qoutes inside of single qoutes to avoid that problem.
+                </p>
+                <pre>
+                    <code>
+// This wont work, since the string ends after the second qoutation mark.
+const name = "Niko "The destroyer of worlds" " 
+
+// This works!
+const name = "Niko 'The destroyer of worlds' "
+const name = 'Niko "The destroyer of worlds" '
+                    </code>
+                </pre>
+            </p>
+            Backticks can include both and have interpolations available like: <code>( ${} )</code>, as well as being multi-line.
+            </p>
+            <pre>
+                <code>
+const myName = `My name is ${firstName} ${lastName}
+and i like carrot juice`
+                </code>
+            </pre>
+            <p>
+                You could use backticks anytime and always, but technically are a bit slower to process due to the interpreter scanning for interpolations and it can be harder to read.
+            </p>
+        </section>
+
+        <section class="topics">
+            <h2>Loop Methods</h2>
+            <p>
+                In JavaScript we often use loop methods, these are the most common ones: <br>
+                <code>[1,2,3].forEach(n => console.log(n))</code><br><br>
+                .forEach() - Runs a function once for every element in an array. <br>
+                <code>[1,2,3].map(n => n * 2) // [2,4,6]</code><br><br>
+                .map() - Creates a new array by transforming each element. <br>
+                <code>[1,2,3,4].filter(n => n > 2) // [3,4]</code><br><br>
+                .filter() - Creates a new array with only elements that pass a condition. <br>
+                <code>[1,2,3].reduce((sum, n) => sum + n, 0) // 6</code><br><br>
+                .reduce() - Combines all values into one single value.<br>
+                <code>[3,1,2].sort() // [1,2,3]</code><br><br>
+                .sort() - Sorts the array. <br>
+                <code>[3,1,2].sort((a,b) => a - b)</code><br><br>
+                .find() - Returns the first element that matches a condition. <br>
+                <code>[1,2,3,4].find(n => n > 2) // 3</code><br><br>
+                .indexOf() - Returns the position (index) of a value in the array.<br>
+                <code>["a","b","c"].indexOf("b") // 1</code><br><br>
+
+                <h4>Basic rules to remember:</h4>
+                Rule 1: Use loop methods whenever possible <br>
+                Rule 2: Only use for loops in JavaScript for finger counting <br>
+                Rule 3: Use map over forEach if you need the data aftwerwards <br>
+
+                <h4>Why we avoid for loops in JavaScript:</h4>
+
+            </p>
+            <pre>
+                <code>
+const numbers = [6, 7, 8, 9];
+
+/* 
+Argument 1: Brevity
+Argument 2: Clarity (loop methods communicate intent)
+Argument 3: No accidental indexing errors (out of bounds)
+*/
+for (let i = 0; i < numbers.length; i++) {
+    console.log(numbers[i]);
+}
+
+numbers.forEach((number) => console.log(number));
+
+/*
+Argument 4: Avoids for of/in numbers confusion
+Argument 5: Able to access both element and index at the same time
+*/
+let list = [4, 5, 6];
+
+for (let i in list) {
+   console.log(i); // "0", "1", "2" <- strings
+}
+
+for (let i of list) {
+   console.log(i); // 4, 5, 6 <- numbers
+}
+
+/* 
+Argument 6: Avoids side effects
+Argument 7: Shorter and more readable/maintainable
+*/
+let oddIndexSideEffect = [];
+let index = 0;
+for (number of numbers) {
+    if (index % 2 === 1) {
+        oddIndexSideEffect.push(Number(number));
+    }
+    index++;
+}
+console.log(oddIndexSideEffect);
+
+const oddNumbers = numbers.filter((element, index) => index % 2 === 1);
+console.log(oddNumbers);
+
+/* Argument 8: Doesn't mutate the original list */
+for (index in numbers) {
+    numbers[index] = numbers[index] * 2;    
+}
+
+// Use .map to avoid side effect / mutating the original list
+const doubledList = numbers.map((number) => number * 2);
+
+console.log(numbers);
+console.log(doubledList);
+                </code>
+            </pre>
+        </section>
+
+        <section class="topics">
+            <h2>REST API Design</h2>
+            <p>
+                <h4>(RE)presentational (S)tate (T)ransfer application programming interface, is an architectural style that's commonly seen as the standard for designing and building the networked applications that power the web.</h4>
+                One of the core principles of REST is using the right HTTP methods for the right action and representing them in the right order. <br>
+                <ul>
+                    <li>GET - Retrieves data (Read)</li>
+                    <li>POST - Creates data (Create)</li>
+                    <li>PUT - Replaces data (Update)</li>
+                    <li>PATCH - Replaces part of data (Update)</li>
+                    <li>DELETE - Deletes data (Delete)</li>
+                </ul>
+
+                <h4>These methods should represent resources and not actions and be plural.</h4>
+                <ul> Name - Method - Description
+                    <li>/beers - GET - Return all beer resourcses</li>
+                    <li>/beers{id} - GET - Return a beer resource by id</li>
+                    <li>/beers - POST - Create a beer resource</li>
+                    <li>/beers{id} - PUT - Update a beer resource by id </li>
+                    <li>/beers{id} - PATCH - Update a part of a beer resource by id</li>
+                    <li>/beers{id} - DELETE - Delete a beer resource by id</li>
+                </ul>
+            </p>
+        </section>
+
     </main>
 
     
