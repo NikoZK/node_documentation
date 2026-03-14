@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/assets/images/Niko.js.png">
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
-    <title>Week 1</title>
-</head>
-<body>
-    <nav>
-        <a href="/"> <img id="logo" src="/assets/images/Niko.js.png"></a>
-        <a href="../about">About</a>
-        <a href="https://github.com/NikoZK/node_documentation">GitHub</a>
-    </nav>
-
-    <main>
         <h1>Variables and datatypes</h1>
         <section class="topics">
         <h2>Variables</h2>
@@ -205,61 +186,59 @@ and i like carrot juice`
 
             </p>
             <pre>
-                <code>
-const numbers = [6, 7, 8, 9];
+const numbers = [6, 7, 8, 9]
 
-/* 
 Argument 1: Brevity
 Argument 2: Clarity (loop methods communicate intent)
 Argument 3: No accidental indexing errors (out of bounds)
-*/
+<code>
 for (let i = 0; i < numbers.length; i++) {
-    console.log(numbers[i]);
+    console.log(numbers[i])
 }
 
-numbers.forEach((number) => console.log(number));
-
-/*
+numbers.forEach((number) => console.log(number))
+</code>
 Argument 4: Avoids for of/in numbers confusion
 Argument 5: Able to access both element and index at the same time
-*/
-let list = [4, 5, 6];
+<code>
+let list = [4, 5, 6]
 
 for (let i in list) {
-   console.log(i); // "0", "1", "2" <- strings
+   console.log(i) // "0", "1", "2" <- strings
 }
 
 for (let i of list) {
-   console.log(i); // 4, 5, 6 <- numbers
+   console.log(i) // 4, 5, 6 <- numbers
 }
-
-/* 
+</code>
 Argument 6: Avoids side effects
 Argument 7: Shorter and more readable/maintainable
-*/
-let oddIndexSideEffect = [];
-let index = 0;
+<code>
+let oddIndexSideEffect = []
+let index = 0
 for (number of numbers) {
     if (index % 2 === 1) {
-        oddIndexSideEffect.push(Number(number));
+        oddIndexSideEffect.push(Number(number))
     }
-    index++;
+    index++
 }
-console.log(oddIndexSideEffect);
+console.log(oddIndexSideEffect)
 
-const oddNumbers = numbers.filter((element, index) => index % 2 === 1);
-console.log(oddNumbers);
-
-/* Argument 8: Doesn't mutate the original list */
+const oddNumbers = numbers.filter((element, index) => index % 2 === 1)
+console.log(oddNumbers)
+</code>
+Argument 8: Doesn't mutate the original list
+<code>
 for (index in numbers) {
-    numbers[index] = numbers[index] * 2;    
+    numbers[index] = numbers[index] * 2  
 }
+</code>
+Use .map to avoid side effect/mutating the original list
+<code>
+const doubledList = numbers.map((number) => number * 2)
 
-// Use .map to avoid side effect / mutating the original list
-const doubledList = numbers.map((number) => number * 2);
-
-console.log(numbers);
-console.log(doubledList);
+console.log(numbers)
+console.log(doubledList)
                 </code>
             </pre>
         </section>
@@ -288,15 +267,3 @@ console.log(doubledList);
                 </ul>
             </p>
         </section>
-
-    </main>
-
-    
-    <footer>
-        <span id="copyright-year"></span>
-    </footer>
-    
-    <script src="/assets/js/footer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-</body>
-</html>
