@@ -1,2 +1,210 @@
+<h1>Loops, Nodemon and requests</h1>
 
-        <h1> test</h1>
+<section class="topics">
+            <h2>Loop Methods</h2>
+            <p>
+                In JavaScript we often use loop methods, these are the most common ones: <br>
+                <code>[1,2,3].forEach(n => console.log(n))</code><br><br>
+                .forEach() - Runs a function once for every element in an array. <br>
+                <code>[1,2,3].map(n => n * 2) // [2,4,6]</code><br><br>
+                .map() - Creates a new array by transforming each element. <br>
+                <code>[1,2,3,4].filter(n => n > 2) // [3,4]</code><br><br>
+                .filter() - Creates a new array with only elements that pass a condition. <br>
+                <code>[1,2,3].reduce((sum, n) => sum + n, 0) // 6</code><br><br>
+                .reduce() - Combines all values into one single value.<br>
+                <code>[3,1,2].sort() // [1,2,3]</code><br><br>
+                .sort() - Sorts the array. <br>
+                <code>[3,1,2].sort((a,b) => a - b)</code><br><br>
+                .find() - Returns the first element that matches a condition. <br>
+                <code>[1,2,3,4].find(n => n > 2) // 3</code><br><br>
+                .indexOf() - Returns the position (index) of a value in the array.<br>
+                <code>["a","b","c"].indexOf("b") // 1</code><br><br>
+
+                <h4>Basic rules to remember:</h4>
+                Rule 1: Use loop methods whenever possible <br>
+                Rule 2: Only use for loops in JavaScript for finger counting <br>
+                Rule 3: Use map over forEach if you need the data aftwerwards <br>
+
+                <h4>Why we avoid for loops in JavaScript:</h4>
+
+            </p>
+            <pre>
+const numbers = [6, 7, 8, 9]
+
+Argument 1: Brevity
+Argument 2: Clarity (loop methods communicate intent)
+Argument 3: No accidental indexing errors (out of bounds)
+<code>
+for (let i = 0; i < numbers.length; i++) {
+    console.log(numbers[i])
+}
+
+numbers.forEach((number) => console.log(number))
+</code>
+Argument 4: Avoids for of/in numbers confusion
+Argument 5: Able to access both element and index at the same time
+<code>
+let list = [4, 5, 6]
+
+for (let i in list) {
+   console.log(i) // "0", "1", "2" <- strings
+}
+
+for (let i of list) {
+   console.log(i) // 4, 5, 6 <- numbers
+}
+</code>
+Argument 6: Avoids side effects
+Argument 7: Shorter and more readable/maintainable
+<code>
+let oddIndexSideEffect = []
+let index = 0
+for (number of numbers) {
+    if (index % 2 === 1) {
+        oddIndexSideEffect.push(Number(number))
+    }
+    index++
+}
+console.log(oddIndexSideEffect)
+
+const oddNumbers = numbers.filter((element, index) => index % 2 === 1)
+console.log(oddNumbers)
+</code>
+Argument 8: Doesn't mutate the original list
+<code>
+for (index in numbers) {
+    numbers[index] = numbers[index] * 2  
+}
+</code>
+Use .map to avoid side effect/mutating the original list
+<code>
+const doubledList = numbers.map((number) => number * 2)
+
+console.log(numbers)
+console.log(doubledList)
+                </code>
+            </pre>
+        </section>
+
+        <section class="topics">
+        <h2>Anatomy of an URL</h2>
+                An URL(Uniform Resource Locator) is a web address which directs to a specific online resource. Lets take
+                a google search as an example:<br>
+                <code> https://www.google.com/search?hl=en&q=cool%20search <br>
+                                1[https] 2[://] 3[www] 4[.google] 5[.com] 6[/search] 7[?hl=en&q=example%20search]
+                        </code>
+        <ul>
+                <li>1 - Protocol</li>
+                <li>2 - Protocol identifier</li>
+                <li>3 - Subdomain</li>
+                <li>4 - Domain name</li>
+                <li>5 - Top level domain</li>
+                <li>6 - Path</li>
+                <li>7 - Query</li>
+        </ul>
+</section>
+
+<section class="topics">
+
+<h2>Nodemon</h2>
+
+<p>
+Nodemon is a development tool that automatically restarts a Node.js server whenever files change.
+This removes the need to manually restart the server after every change. It should only be used for development though.<br><br>
+Normally we start a server using: <code>node app.js</code><br>
+
+With Nodemon we instead run: <code>nodemon app.js</code> or <code>npx nodemon app.js</code>
+if it's installed as a devDependency, which we talked about last week.<br><br>
+
+Nodemon watches the project files and restarts the server automatically when changes are detected, like a hot reload.<br>
+It optimizes our coding efficiency very much by speeding up the time it takes to restart the server to see changes.<br><br>
+We can also configure our nodemon setup, so the hot reload can happen whenever we want, by changing/adding to the ext(extension) in the nodemon.json file:
+</p>
+<pre>
+<code>{
+    "ext": "js, json, html, css"
+}
+</code>
+</pre>
+
+</section>
+
+<section class="topics">
+
+<h2>POST Requests</h2>
+
+<p>
+POST requests are used to send data to the server, usually when creating new resources.<br>
+In Express we must enable JSON body parsing before we can access request data: <code>express.json()</code>
+</p>
+
+<pre>
+<code>const express = require("express")
+const app = express()
+
+app.use(express.json()) // add to express setup
+</code>
+</pre>
+
+<p>
+Now we can receive data from a POST request, a simple post request in Express could look like this:
+</p>
+<pre>
+<code>app.post('/dinosaurs', (req, res) => {
+res.send(req.body)  
+})
+</code>
+</pre>
+<p>
+        The request can now be accessed through <code>req.body</code>.
+</p>
+
+
+</section>
+
+<section class="topics">
+
+<h2>Cross Site Scripting (XSS)</h2>
+
+<p>
+Cross Site Scripting (XSS) is a security vulnerability where malicious JavaScript is injected into a webpage.<br>
+For example if a user submits input containing script tags:<br>
+
+<code>&lt;script&gt;alert("Hacked!")&lt;/script&gt;</code> <br>
+
+If the server returns this directly into the webpage it could execute in the browser.
+</p>
+
+<h4>Frontend prevention</h4>
+
+<p>
+Avoid using <code>innerHTML</code> with untrusted user input.
+Instead use safer alternatives like <code>textContent</code>.
+</p>
+
+<pre><code>element.textContent = userInput</code></pre>
+
+<h4>Backend prevention</h4>
+
+<p>
+User input should be sanitized before being stored or returned by the server.<br>
+Frameworks and libraries can help sanitize or escape dangerous characters.<br>
+We can also manually replace all tags and functional characters for their string counterpart entities like this:
+</p>
+<pre>
+<code>const containerDiv = document.getElementById('container');
+containerDiv.innerHTML = sanitizeXSS(`&lt;img src='x' onerror="alert('XSS')"&gt;`);
+function sanitizeXSS(string) {
+    return string
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
+        .replaceAll('`', '&#x60;')
+        .replaceAll('/', '&#x2F;');
+}
+</code>
+</pre>
+
+</section>

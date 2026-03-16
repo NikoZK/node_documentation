@@ -1,2 +1,370 @@
+<h1>First Server</h1>
 
-        <h1> test</h1>
+<section class="topics">
+<h2>Variables and Scoping</h2>
+
+<h4>JavaScript has 3 ways of defining variables (realistically 2)</h4>
+
+<p>
+<code>const</code> is used for variables which should not be reassigned. <br><br>
+
+<code>let</code> is used for variables which need to be reassigned later. <br><br>
+
+<code>var</code> is considered outdated and should generally be avoided.
+One of the biggest reasons is that it is function-scoped instead of block-scoped.
+</p>
+
+<p>
+Block scope means that variables only exist inside the block they were declared in.
+</p>
+
+<pre>
+<code>{
+    const name = "Nadia"
+}
+
+console.log(name) // ReferenceError
+</code>
+</pre>
+
+<p>
+With <code>var</code>, variables inside blocks are not isolated and can override each other.
+</p>
+
+<pre>
+<code>{
+    var someVariable = true;
+    {
+        var someVariable = false;
+    }
+    console.log(someVariable);
+}
+</code>
+</pre>
+
+<p>
+Here <code>someVariable</code> logs <code>false</code> because both <code>var</code> declarations refer to the same variable.
+</p>
+
+<pre>
+<code>{
+    let someVariable = true;
+    {
+        let someVariable = false;
+    }
+    console.log(someVariable);
+}
+</code>
+</pre>
+
+<p>
+Using <code>let</code> instead logs <code>true</code> because the inner variable is scoped to its own block.
+</p>
+
+<p>
+<code>const</code> also prevents reassignment:
+</p>
+
+<pre>
+<code>const age = 25
+age = 27 // Error
+</code>
+</pre>
+
+<p>
+However objects and arrays declared with <code>const</code> can still have their contents modified.
+</p>
+
+<pre>
+<code>const user = { name: "Nadia" }
+
+user.name = "Niko" // allowed
+</code>
+</pre>
+</section>
+
+<section class="topics">
+
+        <h2>Callback Functions</h2>
+
+        <p>
+                A callback function is a function that is passed as an argument to another function and executed later.
+        </p>
+
+<pre>
+<code>function processUser(name, callback) {
+    callback(name)
+}
+
+processUser("Niko", (name) => {
+    console.log("Hello " + name)
+})
+</code>
+</pre>
+
+        <p>
+                Callbacks are heavily used in JavaScript for asynchronous behavior and event handling.<br>
+                They can be written in several ways:
+        </p>
+<pre>
+<code>// Named function
+function eatAction(name) {
+    console.log(name)
+}
+
+processUser("Niko", eatAction)
+
+// Anonymous function
+processUser("Niko", function(name){
+    console.log(name)
+})
+
+// Arrow function
+processUser("Niko", name => console.log(name))
+</code>
+</pre>
+</section>
+
+<section class="topics">
+
+<h2>NPM (Node Package Manager)</h2>
+
+<p>
+NPM is the default package manager for Node.js. It's a language specific package manager, like Maven/
+Gradle is Java or Pip for python. <br><br>
+We can also use Yarn or pnpm as alternatives.
+It is used to install, manage and share JavaScript packages.<br>
+
+Packages are reusable libraries that other developers have published.
+</p>
+
+<code>npm install express</code>
+
+<p>
+This command downloads the Express framework and all its dependencies.
+</p>
+
+</section>
+
+<section class="topics">
+
+<h2>package.json</h2>
+
+<p>
+<code>package.json</code> is the configuration file for a Node.js project.
+It describes the project and manages its dependencies.<br>
+
+It usually contains the information below, but may also just be the dependencies for simple projects.
+</p>
+
+<ul>
+        <li>Project name</li>
+        <li>Version</li>
+        <li>Scripts</li>
+        <li>Dependencies</li>
+        <li>Project metadata</li>
+</ul>
+
+<pre>
+<code>{
+    "dependencies": {
+        "express": "5.2.1"
+    }
+}
+</code>
+</pre>
+
+<p>
+It can be created automatically with: <code>npm init</code> <br> <br>
+
+And that would ask us to fill out alot of info, like this package.json for this current project:
+</p>
+
+<pre>
+<code>{
+  "name": "node_documentation",
+  "version": "1.0.0",
+  "description": "Documentation for node.js lesson for mandatory 1 assignment",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikoZK/node_documentation.git"
+  },
+  "author": "Niko Z. K.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikoZK/node_documentation/issues"
+  },
+  "homepage": "https://github.com/NikoZK/node_documentation#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
+</code>
+</pre>
+
+<p>
+But it can also be written manually if needed.<br><br>
+In my project i have dependencies and devDependencies. Dependencies are required for the app to run, 
+while devDependencies are just needed in development, for testing with hot reload in this case with Nodemon.
+</p>
+
+</section>
+
+<section class="topics">
+
+<h2>node_modules</h2>
+
+<p>
+The <code>node_modules</code> folder contains all installed dependencies of the project.<br>
+After running:
+</p>
+
+<code>npm install</code>
+
+<p>
+NPM downloads every required package and stores them inside this folder.
+</p>
+
+<p>
+This folder should never be pushed to GitHub because:
+</p>
+
+<ul>
+        <li>It can become extremely large</li>
+        <li>Dependencies can always be reinstalled by other dev's by just running <code>npm install</code></li>
+        <li>The <code>package.json</code> and <code>package-lock.json</code> already define them</li>
+</ul>
+
+<p>
+Therefore we add it to <code>.gitignore</code>.
+</p>
+
+</section>
+
+<section class="topics">
+        <h2>Express.js</h2>
+<p>
+        Express.js is a popular Node.js web application framework for routing and HTTP requests/reponse,
+        due to being minimal and very easy to set up.
+</p>
+<pre>
+<code>// step 1 - import express
+const express = require('express')
+
+// step 2 - instantiate express
+const app = express()
+
+
+// step 3 - have the server listen on port 8080
+app.listen(8080)
+</code>
+</pre>
+<p>
+       The server now runs on <code>http://localhost:8080</code> and can responds to requests.<br><br>
+       It can also be optimized a bit, by tweaking the setup a bit:<br>
+</p>
+<pre>
+<code>// we can make the first two parts a one-liner:
+const app = require('express')();
+
+
+// and by defining the port in process.env and using short circuit syntax 
+as well as adding some error handling and port + enviroment logging:
+
+const PORT = process.env.PORT || 8080
+
+const server = app.listen(PORT, (error) => {
+    if (error) {
+        console.log("Error starting the server")
+    }
+    console.log("Server is running on port", server.address().port, "The enviroment is:", process.env.NODE_ENV)
+})
+</code>
+</pre>
+
+<p>
+        We now have a clean and optimized Express.js server setup.
+</p>
+</section>
+
+<section class="topics">
+
+<h2>Client Server Model</h2>
+
+<p>
+The client-server model is the basic structure of the web, explaining what happens when clients and servers interact.
+</p>
+
+<ul>
+        <li>Client - The client makes a request from their browser or mobile app</li>
+        <li>Server - The system responds with data or resources</li>
+</ul>
+
+<p>
+Example:
+</p>
+
+<ul>
+        <li>Client sends HTTP request</li>
+        <li>Server processes the request</li>
+        <li>Server sends HTTP response</li>
+        <li>Client receives and displays the data</li>
+</ul>
+
+<p>
+The most basic example is when visiting a website your browser acts as the client 
+and the web server returns HTML, CSS and JavaScript and then you see the content.
+</p>
+
+</section>
+
+<section class="topics">
+
+<h2>GET Requests</h2>
+
+<p>
+GET requests are used to retrieve data from a server.<br>
+
+Data can be sent through using path parameters or with query parameters.<br><br>
+
+Path variable:
+</p>
+
+<pre>
+<code>app.get('/cars/:carModel/:year', (req, res) => {
+    console.log(req.params);
+    res.send({ data: `
+        Your ${req.params.carModel} is very nice.
+        Is it from the year ${req.params.year}?
+    `});
+});
+</code>
+</pre>
+
+<p>
+        So when you access <code>http://localhost:8080/cars/mazda+mx5/1998</code> <br>
+        The response becomes: <code>{ data: "Your mazda mx5 is very nice.Is it from the year 1998?" }</code> <br><br>
+
+        Query string:
+</p>
+<pre>
+<code>app.get('/bag', (req, res) => {
+    res.send({ data: req.query });
+});
+</code>
+</pre>
+<p>
+        Here we use the URL parameters with <code>req.query</code>.<br>
+        So when we access the URL: <code>http://localhost:8080/bag?color=red&size=small</code><br>
+        The response becomes: <code>{ data: { color: "red", size: "small" } }</code>
+</p>
+
+
+</section>

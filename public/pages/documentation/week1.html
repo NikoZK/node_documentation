@@ -1,93 +1,53 @@
-        <h1>Variables and datatypes</h1>
-        <section class="topics">
-        <h2>Variables</h2>
-        <h4>JavaScript has 3 ways of defining a variable(Realistically 2)</h4>
-        <p>
-            <code>const</code> is used for variables which do not want to be reassigned later. <br><br>
-            <code>let</code> is used for variables which want to be reassigned later. <br> <br>
-            <code>var</code> is just not used anymore avoid it. <br>
-            One of the biggest reasons is, that its function-scoped, not block-scoped.
-            This means that variables declared inside loops, if statements, or other blocks are not confined to that block, but can be accessed outside it, which can lead to bugs.
-            </p>
-            <pre>
-                <code>
-{
-    var someVariable = true;
-    {
-        var someVariable = false;
-    }
-    console.log(someVariable);
-}
-                </code>
-            </pre>
-            <p>
-                Here someVariable would log "false" because the inner <code>var</code> overrides the outer, because they are practically the same variable.
-            </p>
-            <pre>
-                <code>
-{
-    let someVariable = true;
-    {
-        let someVariable = false;
-    }
-    console.log(someVariable);
-}
-                </code>
-            </pre>
-            <p>
-                While using <code>let</code> instead it will log "true", because the inner <code>let</code> is not the same variable as the outer.
-            </p>
-        </section>
+<h1>Datatypes and miscellaneous</h1>
 
-                <section class="topics">
-        <h2>Datatypes</h2>
-        <h4>In JavaScript we have 8 datatypes</h4>
-        <p>
-            <ul>
-                <li>String - Text value</li>
-                <li>Boolean - True or false </li>
-                <li>Number - Numeric value</li>
-                <li>BigInt - Huge numeric value</li>
-                <li>Object - Key: Value pair</li>
-                <li>Symbol - Immutable and unique symbol value</li>
-                <li>null - Explicitly set to no value</li>
-                <li>undefinded - No value asssigned yet</li>
-            </ul>
-        </p>
-    </section>
+<section class="topics">
+    <h2>Datatypes</h2>
+    <h4>In JavaScript we have 8 datatypes</h4>
+    <ul>
+        <li>String - Text value</li>
+        <li>Boolean - True or false </li>
+        <li>Number - Numeric value</li>
+        <li>BigInt - Huge numeric value</li>
+        <li>Object - Key: Value pair</li>
+        <li>Symbol - Immutable and unique symbol value</li>
+        <li>null - Explicitly set to no value</li>
+        <li>undefined - No value asssigned yet</li>
+    </ul>
+</section>
 
-        <section class="topics">
-            <h2>Type coercion</h2>
-            <h4>In JavaScript datatypes can automatically convert from one datatype to another if necessary.</h4>
+<section class="topics">
+    <h2>Type coercion</h2>
+    <h4>In JavaScript datatypes can automatically convert from one datatype to another if necessary.</h4>
 
-            <pre><code>
-5 + "10" = "510"
-"5" + 10 = "510"
+<pre>
+<code>5 + "10" // "510"
+"5" + 10 // "510"
 
 "5" - 2 = 3
 "5" * 2  = 10
 "5" / 2 = 2.5
-            </code></pre>
-            <p>
-                We can see that when using <code>+</code>, the coercion prefers Strings, thats because <code>+</code> is used for number addition AND String concatenation. <br>
-                While <code>-</code>, <code>*</code>, <code>/</code> and <code>%</code>only works with numbers, and therefore results in a Number coercion.
-            </p>
-            <pre>
-                <code>
-Boolean("True") = True
-Boolean("False") = True
-Boolean("") = False
-Boolean(0) = False
-Boolean(1) = True
-                </code>
-            </pre>
-            <p>
-                Booleans also do type coercion and will result True to everything EXCEPT falsy values. <br>
-                These are the only falsy values in JavaScript:
-            </p>
-            <pre>
-            <code>
-false
+</code>
+</pre>
+    <p>
+        We can see that when using <code>+</code>, the coercion prefers Strings, thats because <code>+</code> is used
+        for number addition AND String concatenation. <br>
+        While <code>-</code>, <code>*</code>, <code>/</code> and <code>%</code>only works with numbers, and therefore
+        results in a Number coercion.
+    </p>
+<pre>
+<code>Boolean("True") // True
+Boolean("False") // True
+Boolean("") // False
+Boolean(0) // False
+Boolean(1) // True
+</code>
+</pre>
+    <p>
+        Booleans also do type coercion and will result True to everything EXCEPT falsy values. <br>
+        These are the only falsy values in JavaScript:
+    </p>
+<pre>
+<code>false
 0
 -0
 0n
@@ -95,175 +55,123 @@ false
 null
 undefined
 NaN
-            </code>
-            </pre>
-            <p>
-                Everything else will equal True.
-            </p>
-        </section>
+</code>
+</pre>
+    <p>
+        Everything else will equal True.
+    </p>
+</section>
 
-        <section class="topics">
-            <h2>Strict and loose equality</h2>
-            <p>
-                If we want to avoid type coercion, we can use strict equality(<code> === </code>)<br>
-                Then JavaScript checks if BOTH the types and values are the same:
-            </p>
-            <pre>
-                <code>
-10 === 10 = true
+<section class="topics">
+    <h2>Strict and loose equality</h2>
+    <p>
+        If we want to avoid type coercion, we can use strict equality(<code> === </code>)<br>
+        Then JavaScript checks if BOTH the types and values are the same:
+    </p>
+<pre>
+<code>10 === 10 = true
 10 === "10" = false
 true === true = true
 true === 1 = false
 true === "true" = false
 false === false = true
-                </code>
-            </pre>
-            <p>
-                For comparison there is also loose equality (<code> == </code>), which does type coercion FIRST and then compares. <br>
-                Therefore all the examples above, would become true.
-            </p>
-        </section>
+</code>
+</pre>
+    <p>
+        For comparison there is also loose equality (<code> == </code>), which does type coercion FIRST and then
+        compares. <br>
+        Therefore all the examples above, would become true.
+    </p>
+</section>
 
-        <section class="topics">
-            <h2>String defining</h2>
-            <p>
-                In javaScript we have 3 ways of defining a string <br>
-                Single qoutes: <code>''</code><br>
-                Double qoutes: <code>""</code><br>
-                Backticks: <code>``</code><br>
-                You cannot use single or double qoutes inside of single or double qoutes, that would end the string. Therefore we can use single qoutes inside of double qoutes or double qoutes inside of single qoutes to avoid that problem.
-                </p>
-                <pre>
-                    <code>
-// This wont work, since the string ends after the second qoutation mark.
+<section class="topics">
+    <h2>String defining</h2>
+    <p>
+        In javaScript we have 3 ways of defining a string <br>
+        Single quotes: <code>''</code><br>
+        Double quotes: <code>""</code><br>
+        Backticks: <code>``</code><br>
+        You cannot use single or double quotes inside of single or double quotes, that would end the string. Therefore
+        we can use single quotes inside of double quotes or double quotes inside of single quotes to avoid that problem.
+    </p>
+<pre>
+<code>// This wont work, since the string ends after the second quotation mark.
 const name = "Niko "The destroyer of worlds" " 
 
 // This works!
 const name = "Niko 'The destroyer of worlds' "
 const name = 'Niko "The destroyer of worlds" '
-                    </code>
-                </pre>
-            </p>
-            Backticks can include both and have interpolations available like: <code>( ${} )</code>, as well as being multi-line.
-            </p>
-            <pre>
-                <code>
-const myName = `My name is ${firstName} ${lastName}
+</code>
+</pre>
+    </p>
+    Backticks can include both and have interpolations available like: <code>( ${} )</code>, as well as being
+    multi-line.
+    </p>
+    <pre>
+<code>const myName = `My name is ${firstName} ${lastName}
 and i like carrot juice`
-                </code>
-            </pre>
-            <p>
-                You could use backticks anytime and always, but technically are a bit slower to process due to the interpreter scanning for interpolations and it can be harder to read.
-            </p>
-        </section>
-
-        <section class="topics">
-            <h2>Loop Methods</h2>
-            <p>
-                In JavaScript we often use loop methods, these are the most common ones: <br>
-                <code>[1,2,3].forEach(n => console.log(n))</code><br><br>
-                .forEach() - Runs a function once for every element in an array. <br>
-                <code>[1,2,3].map(n => n * 2) // [2,4,6]</code><br><br>
-                .map() - Creates a new array by transforming each element. <br>
-                <code>[1,2,3,4].filter(n => n > 2) // [3,4]</code><br><br>
-                .filter() - Creates a new array with only elements that pass a condition. <br>
-                <code>[1,2,3].reduce((sum, n) => sum + n, 0) // 6</code><br><br>
-                .reduce() - Combines all values into one single value.<br>
-                <code>[3,1,2].sort() // [1,2,3]</code><br><br>
-                .sort() - Sorts the array. <br>
-                <code>[3,1,2].sort((a,b) => a - b)</code><br><br>
-                .find() - Returns the first element that matches a condition. <br>
-                <code>[1,2,3,4].find(n => n > 2) // 3</code><br><br>
-                .indexOf() - Returns the position (index) of a value in the array.<br>
-                <code>["a","b","c"].indexOf("b") // 1</code><br><br>
-
-                <h4>Basic rules to remember:</h4>
-                Rule 1: Use loop methods whenever possible <br>
-                Rule 2: Only use for loops in JavaScript for finger counting <br>
-                Rule 3: Use map over forEach if you need the data aftwerwards <br>
-
-                <h4>Why we avoid for loops in JavaScript:</h4>
-
-            </p>
-            <pre>
-const numbers = [6, 7, 8, 9]
-
-Argument 1: Brevity
-Argument 2: Clarity (loop methods communicate intent)
-Argument 3: No accidental indexing errors (out of bounds)
-<code>
-for (let i = 0; i < numbers.length; i++) {
-    console.log(numbers[i])
-}
-
-numbers.forEach((number) => console.log(number))
 </code>
-Argument 4: Avoids for of/in numbers confusion
-Argument 5: Able to access both element and index at the same time
-<code>
-let list = [4, 5, 6]
+</pre>
+    <p>
+        You could use backticks anytime and always, but technically are a bit slower to process due to the interpreter
+        scanning for interpolations and it can be harder to read.
+    </p>
+</section>
 
-for (let i in list) {
-   console.log(i) // "0", "1", "2" <- strings
-}
+<section class="topics">
+    <h2>Automatic Semicolon Insertion (ASI)</h2>
+    <p>
+        In JavaScript there is a feature called Automatic Semicolon Insertion, which is kind of
+        self explanatory. Which in short means that a <code>;</code> gets added "invisibly" at the end of statements,
+        instead of the user manually placing them.<br>
+        It's a bit of a controversial topic in the world of JavaScript and many users are against it and
+        prefer to place semicolons anyways, due to the advanced rules behind the scenes that can cause some unintended
+        results,
+        but mostly due to personal preference and a habit from other languages.
+    </p>
 
-for (let i of list) {
-   console.log(i) // 4, 5, 6 <- numbers
-}
-</code>
-Argument 6: Avoids side effects
-Argument 7: Shorter and more readable/maintainable
-<code>
-let oddIndexSideEffect = []
-let index = 0
-for (number of numbers) {
-    if (index % 2 === 1) {
-        oddIndexSideEffect.push(Number(number))
-    }
-    index++
-}
-console.log(oddIndexSideEffect)
+</section>
 
-const oddNumbers = numbers.filter((element, index) => index % 2 === 1)
-console.log(oddNumbers)
-</code>
-Argument 8: Doesn't mutate the original list
-<code>
-for (index in numbers) {
-    numbers[index] = numbers[index] * 2  
-}
-</code>
-Use .map to avoid side effect/mutating the original list
-<code>
-const doubledList = numbers.map((number) => number * 2)
+<section class="topics">
+    <h2>Clean Code</h2>
 
-console.log(numbers)
-console.log(doubledList)
-                </code>
-            </pre>
-        </section>
+    <p>
+        While using a linter is not a strict requirement, writing clean and readable code is important.
+        Clean code makes it easier for other developers to understand and maintain your project.<br><br>
+        Some common clean code practices include:
+    </p>
 
-        <section class="topics">
-            <h2>REST API Design</h2>
-            <p>
-                <h4>(RE)presentational (S)tate (T)ransfer application programming interface, is an architectural style that's commonly seen as the standard for designing and building the networked applications that power the web.</h4>
-                One of the core principles of REST is using the right HTTP methods for the right action and representing them in the right order. <br>
-                <ul>
-                    <li>GET - Retrieves data (Read)</li>
-                    <li>POST - Creates data (Create)</li>
-                    <li>PUT - Replaces data (Update)</li>
-                    <li>PATCH - Replaces part of data (Update)</li>
-                    <li>DELETE - Deletes data (Delete)</li>
-                </ul>
+    <ul>
+        <li>Using meaningful variable names</li>
+        <li>Keeping functions small and focused</li>
+        <li>Consistent formatting (especially spacing) and indentation</li>
+    </ul>
 
-                <h4>These methods should represent resources and not actions and be plural.</h4>
-                <ul> Name - Method - Description
-                    <li>/beers - GET - Return all beer resourcses</li>
-                    <li>/beers{id} - GET - Return a beer resource by id</li>
-                    <li>/beers - POST - Create a beer resource</li>
-                    <li>/beers{id} - PUT - Update a beer resource by id </li>
-                    <li>/beers{id} - PATCH - Update a part of a beer resource by id</li>
-                    <li>/beers{id} - DELETE - Delete a beer resource by id</li>
-                </ul>
-            </p>
-        </section>
+</section>
+
+<section class="topics">
+    <h2>REST API Design</h2>
+    <p>
+    <h4>(RE)presentational (S)tate (T)ransfer application programming interface, is an architectural style that's
+        commonly seen as the standard for designing and building the networked applications that power the web.</h4>
+    One of the core principles of REST is using the right HTTP methods for the right action and representing them in the
+    right order. <br>
+    <ul>
+        <li>GET - Retrieves data (Read)</li>
+        <li>POST - Creates data (Create)</li>
+        <li>PUT - Replaces data (Update)</li>
+        <li>PATCH - Replaces part of data (Update)</li>
+        <li>DELETE - Deletes data (Delete)</li>
+    </ul>
+
+    <h4>These methods should represent resources and not actions and be plural.</h4>
+    <ul> Name - Method - Description
+        <li>/beers - GET - Return all beer resources</li>
+        <li>/beers{id} - GET - Return a beer resource by id</li>
+        <li>/beers - POST - Create a beer resource</li>
+        <li>/beers{id} - PUT - Update a beer resource by id </li>
+        <li>/beers{id} - PATCH - Update a part of a beer resource by id</li>
+        <li>/beers{id} - DELETE - Delete a beer resource by id</li>
+    </ul>
+    </p>
+</section>
