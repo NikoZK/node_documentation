@@ -1,2 +1,154 @@
+<h1>Imports, Static files and redirection</h1>
 
-        <h1> test</h1>
+<section class="topics">
+<h2>Serving Static Files in Express</h2>
+
+<p>
+In Express we can serve static files such as HTML, CSS, JavaScript and images by using:<br>
+
+<code>app.use(express.static("public"))</code><br>
+
+This means files inside the <code>public</code> folder can be accessed directly by the browser.<br><br>
+
+This is important for security, because we only expose the files we need to show in the frontend and not the whole project folder.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Import and Export in Frontend JavaScript</h2>
+
+<p>
+"ES Modules (ESM) are the official, standardized format for packaging JavaScript code for reuse, featuring built-in
+import and export statements"<br><br>
+In the frontend we can use ES Modules by adding the <code>type="module"</code> attribute to the script tag.
+</p>
+
+<pre><code>&lt;script type="module" src="./cookies.js"&gt;&lt;/script&gt;</code></pre>
+
+<p>
+We also need to add it to our package.json:
+</p>
+<pre><code>{
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+</code></pre>
+<p>
+This allows us to use <code>import</code> and <code>export</code> in browser JavaScript files.<br>
+This file below is cookieFactory.js:
+</p>
+
+<pre><code>function getNewCookieBatch() {
+    return ['🍪', '🥛', '🍪', '🍪']
+}
+
+export default {
+    getNewCookieBatch
+}</code></pre>
+
+<p>
+And this file below is cookies.js and it imports cookieFactory.js:
+</p>
+
+<pre><code>import cookieFactory from './cookieFactory.js'
+
+console.log(cookieFactory.getNewCookieBatch())</code></pre>
+
+<p>
+We export a default object from one file and import it in another file.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>CommonJS vs ES Modules</h2>
+
+<p>
+There are two module systems which Node.js supports: CommonJS and ES Modules.<br>
+But CommonJS is the classic but outdated way of doing it, and almost all modern applications use ES Modules.
+</p>
+
+<h4>CommonJS</h4>
+
+<pre><code>const cookie = require('./cookie.json')
+
+function getCookie() {
+    return cookie
+}
+
+module.exports = {
+    getCookie
+}</code></pre>
+
+<h4>ES Modules</h4>
+
+<pre><code>import express from 'express'
+
+export function esModuleCookieFactory() {
+    return "On a break..."
+}</code></pre>
+
+<p>
+CommonJS uses <code>require()</code> and <code>module.exports</code>, while ES Modules simply uses <code>import</code> and <code>export</code>.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Redirection</h2>
+
+<p>
+Redirection means sending the user from one URL to another.
+There are multiple ways to do this.
+</p>
+
+<h4>Client-side redirection</h4>
+
+<p>
+Client-side redirection happens in the browser.<br>
+I will show three examples:
+</p>
+
+<ul>
+    <li>Anchor tags</li>
+    <li>Meta refresh</li>
+    <li>JavaScript with <code>location.href</code> or <code>location.replace()</code></li>
+</ul>
+
+<p>
+Anchor tag which redirects to "/" instantly:
+</p>
+<pre><code>&lt;a href="/"&gt;Take me awayyyyyy&lt;/a&gt;</code></pre>
+
+<p>
+We can also use a meta tag to redirect:
+</p>
+<pre><code> &lt;meta http-equiv="refresh" content="3;/" /&gt;</code></pre>
+
+<p>
+Or with JavaScript functionality:
+</p>
+
+<pre><code>setTimeout(() => {
+    location.href = '/'
+}, 3000)</code></pre>
+
+<h4>Server-side redirection</h4>
+
+<p>
+Server-side redirection happens on the server, before the browser receives the final page.
+In Express this can be done with:
+</p>
+
+<pre><code>app.get("/go-home", (req, res) => {
+    res.redirect("/")
+})</code></pre>
+
+<p>
+The difference is that client-side redirection is triggered in the browser, while server-side redirection is triggered by the backend.
+</p>
+
+</section>

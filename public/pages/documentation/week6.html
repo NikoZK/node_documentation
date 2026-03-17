@@ -1,2 +1,168 @@
+<h1>Client vs Server and environment variables</h1>
 
-        <h1> test</h1>
+<section class="topics">
+<h2>NPM Scripts</h2>
+
+<p>
+In <code>package.json</code> we can define scripts that can be run with npm.<br>
+This makes it easier to start the project in different environments.
+</p>
+
+<pre><code>{
+  "scripts": {
+    "start-dev": "cross-env PORT=8080 NODE_ENV=DEV nodemon.cmd app.js",
+    "start-prod": "cross-env PORT=80 node app.js"
+  }
+}</code></pre>
+
+<p>
+These scripts can be run from the terminal with the commands:
+<code>npm run start-dev</code> or <code>npm run start-prod</code><br>
+
+Using scripts makes project commands easier to remember and reuse.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Environment Variables</h2>
+
+<p>
+Environment variables are values provided to the application from outside the code.
+They are commonly used for configuration such as ports, API keys or the environment type.
+</p>
+
+<pre><code>const PORT = process.env.PORT || 8080
+
+const server = app.listen(PORT, (error) => {
+    if (error) {
+        console.log("Error starting the server")
+    }
+    console.log("Server is running on port", server.address().port, "The environment is:", process.env.NODE_ENV)
+})</code></pre>
+
+<p>
+In Node.js we access environment variables with <code>process.env</code>.
+Here <code>PORT</code> decides which port the server runs on, while <code>NODE_ENV</code> can describe whether the app is running in development or production.<br><br>
+
+In this project we used <code>cross-env</code> in npm scripts, but the important part is reading values through <code>process.env</code>.<br>
+We can also manually set in in the terminal with <code>$env:NODE_ENV = 'production'</code> or <code>$env:NODE_ENV = 'development'</code> for windows at least.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Semantic HTML</h2>
+
+<p>
+Semantic HTML means using tags based on their meaning instead of just spamming <code>&lt;div&gt;</code> everywhere.<br>
+This makes the code easier to read and improves accessibility.<br><br>
+
+Examples of semantic tags:
+</p>
+
+<ul>
+        <li><code>&lt;header&gt;</code></li>
+        <li><code>&lt;main&gt;</code></li>
+        <li><code>&lt;section&gt;</code></li>
+        <li><code>&lt;footer&gt;</code></li>
+</ul>
+
+<pre><code>&lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    &lt;section&gt;
+        &lt;h2&gt;Content&lt;/h2&gt;
+        &lt;p&gt;text text text&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &copy; 2026
+&lt;/footer&gt;
+</code></pre>
+
+<p>
+This makes the project easier to navigate in the long run, reuse code and maintain as it grows.
+</p>
+</section>
+
+<section class="topics">
+<h2>Client Files vs Server Files</h2>
+
+<p>
+In a Node.js project we separate client files and server files.
+</p>
+
+<p>
+Server files run in Node.js and handle backend logic like routes and APIs.<br>
+Client files run in the browser and include files like HTML, CSS and the frontend specific JavaScript.<br><br>
+
+In this project, client files are placed inside the <code>public</code> folder:
+</p>
+
+<ul>
+        <li><code>assets/css</code> - Styles</li>
+        <li><code>assets/js</code> - Frontend JavaScript</li>
+        <li><code>assets/images</code> - Images</li>
+        <li><code>pages</code> - HTML pages</li>
+</ul>
+
+<p>
+The server files like <code>app.js</code> is part of the backend and should not be exposed to the client.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Footer</h2>
+
+<p>
+We can keep the footer at the bottom of the page using flexbox on <code>main</code> and <code>body</code>:
+</p>
+
+<pre><code>body {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}</code></pre>
+
+<p>
+This makes the page take up the full height, and the <code>main</code> element fills all the space,
+pushing the footer down to the bottom.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>CDN vs Local Files</h2>
+
+<p>
+A CDN (Content Delivery Network) allows us to load external libraries from the internet instead of storing them locally.
+</p>
+
+<pre><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"&gt;</code></pre>
+
+<h4>Pros</h4>
+
+<ul>
+        <li>Easy to use and implement</li>
+        <li>No need to download any files</li>
+        <li>Can often be faster due to caching</li>
+</ul>
+
+<h4>Cons</h4>
+
+<ul>
+        <li>Depends on internet connection</li>
+        <li>Relies on third-party maintenance</li>
+        <li>Less control compared to local files</li>
+</ul>
+
+</section>

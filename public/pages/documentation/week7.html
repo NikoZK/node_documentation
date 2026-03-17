@@ -1,0 +1,159 @@
+<h1>Server Side Rendering and routers</h1>
+
+<section class="topics">
+<h2>Server Side Rendering vs Client Side Rendering</h2>
+
+<p>
+Server-Side Rendering (SSR) means the server first builds the HTML THEN sends it to the browser.
+Client-Side Rendering (CSR) means the browser receives a little HTML content and then JavaScript builds the page itself.<br><br>
+
+In this project i will show how i use SSR, how the server reads HTML files and combines them with shared components like the header and footer before sending the final page.
+</p>
+
+<h4>SSR advantages</h4>
+
+<ul>
+    <li>Faster first page load</li>
+    <li>Better for SEO because search engines receive full HTML and can scan through it</li>
+    <li>No browser-side CORS problems when the server fetches data itself</li>
+</ul>
+
+<h4>CSR advantages</h4>
+
+<ul>
+    <li>Can feel and be made more dynamic after loading</li>
+    <li>Full page reloads feels faster for the user</li>
+    <li>Moves more workload to the browser instead of the server</li>
+</ul>
+
+<p>
+So SSR spends more resources on the server, while CSR spends more resources in the browser.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Server-Side Rendering with Routers and Templating engine</h2>
+
+<p>
+In this project the server uses Server-Side Rendering (SSR).
+That means the server builds the full HTML page before sending it to the browser.<br><br>
+
+The flow works like this:
+</p>
+
+<pre><code>app.js
+-> pagesRouter.js
+-> pagesUtil.js
+-> templatingEngine.js
+-> header.html + page.html + footer.html
+</code></pre>
+
+<p>
+First, <code>app.js</code> sets up Express and registers the routers:
+</p>
+
+<pre><code>import pagesRouter from './routers/pagesRouter.js'
+import replRouter from './routers/replRouter.js'
+
+app.use(pagesRouter)
+app.use(replRouter)</code></pre>
+
+<p>
+Then <code>pagesRouter.js</code> handles the page routes and sends the finished HTML pages:
+</p>
+
+<pre><code>import { Router } from 'express'
+import { frontpagePage, aboutPage, contactPage } from '../util/pagesUtil.js'
+
+const router = Router()
+    router.get('/', (req, res) => {
+    res.send(frontpagePage)
+})
+
+router.get('/about', (req, res) => {
+    res.send(aboutPage)
+})</code></pre>
+
+<p>
+The page variables like <code>cssLinks</code> come from <code>pagesUtil.js</code>, where page files are read and passed into the templating engine:
+</p>
+
+<pre><code>const frontpage = readPage('./public/pages/frontend/frontend.html')
+export const frontpagePage = constructPage(frontpage, {
+    cssLinks: '&lt;link rel="stylesheet" href="/pages/frontend/frontend.css"&gt;'
+})</code></pre>
+
+<p>
+Finally, <code>templatingEngine.js</code> reads shared HTML files and combines them:
+</p>
+
+<pre><code>export function constructPage(page, options = {}) {
+    const header = readPage('./public/components/header/header.html')
+    const footer = readPage('./public/components/footer/footer.html')
+
+    return header
+        .replace('$$DOCUMENT_TITLE$$', options.documentTitle || 'Online Node.js REPL')
+        .replace('$$CSS_LINKS$$', options.cssLinks || '')
+        + page
+        + footer
+}
+
+export function readPage(path) {
+    return fs.readFileSync(path).toString()
+}</code></pre>
+
+<p>
+This means the server reads the files, combines header, page content and footer so we avoid doing it over and over, 
+and sends one finished HTML page to the browser.<br><br>
+This is how the project structure looks like:
+</p>
+<pre><code>06._ONLINE_NODE_REPL
+│   app.js
+│   nodemon.json
+│   package.json
+│
+├── public
+│   ├── assets
+│   │   ├── css
+│   │   ├── images
+│   │   └── js
+│   ├── components
+│   │   ├── footer
+│   │   └── header
+│   └── pages
+│       ├── about
+│       ├── contact
+│       └── frontend
+│
+├── routers
+│   ├── pagesRouter.js
+│   └── replRouter.js
+│
+└── util
+    ├── pagesUtil.js
+    ├── replUtil.js
+    └── templatingEngine.js</code></pre>
+
+</section>
+
+<section class="topics">
+<h2>Synchronous and Asynchronous File Reading</h2>
+
+<p>
+In this project the files are read with <code>fs.readFileSync()</code>, which is synchronous.
+That means the server will wait until the file is fully read before continuing.
+</p>
+
+<pre><code>export function readPage(path) {
+    return fs.readFileSync(path).toString()
+}</code></pre>
+
+<p>
+Synchronous code is simpler to write and understand, but it blocks/stops execution while the file is being read.
+Asynchronous file reading is better for larger applications because it does'nt block the sequence of events in the same way.<br>
+
+In small projects the synchronous way is fine, but in bigger applications too much synchronous file reading will hurt the efficiency.
+</p>
+
+</section>

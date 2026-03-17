@@ -14,6 +14,29 @@ body {
     flex-direction: column;
 }
 
+.frontpage-list {
+    font-size: large;
+}
+.frontpage-list li {
+    margin: 0.5rem 0;
+}
+
+.frontpage-list a {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    padding: 0.4rem 0.6rem;
+}
+
 .topics {
     border: 2px solid #cac7c7;
     padding: 20px;

@@ -1,2 +1,173 @@
+<h1>CRUD Rest API, Fetch and Date</h1>
 
-        <h1> test</h1>
+<section class="topics">
+<h2>CRUD API with Express</h2>
+
+<p>
+A CRUD API supports the four basic operations:<br>
+Create, Read, Update and Delete.<br>
+In REST APIs we represent these operations with HTTP methods.
+</p>
+
+<ul>
+    <li>GET - Read resources</li>
+    <li>POST - Create resources</li>
+    <li>PUT/PATCH - Update resources</li>
+    <li>DELETE - Delete resources</li>
+</ul>
+
+<pre><code>const express = require("express")
+const app = express()
+
+app.use(express.json())
+
+const movies = [
+    { id: 1, title: "Garlic is as good as ten mothers" },
+    { id: 2, title: "Minecraft the Movie" }
+]
+
+let nextId = 3</code></pre>
+<p>
+        We have 2 movies and a <code>let nextId</code> to simulate and comply with auto incrementation.
+</p>
+
+<pre><code>app.get("/movies", (req, res) => {
+    res.send({ data: movies })
+})
+
+app.get("/movies/:id", (req, res) => {
+    const movieId = Number(req.params.id)
+    const foundMovie = movies.find(movie => movie.id === movieId)
+
+    if (!foundMovie) {
+        return res.status(404).send({ errorMessage: "Movie not found" })
+    }
+
+    res.send({ data: foundMovie })
+})</code></pre>
+<p>
+        GET method for movies with error handling.
+</p>
+<pre><code>app.post("/movies", (req, res) => {
+    const newMovie = {
+        id: nextId++,
+        title: req.body.title
+    }
+
+    movies.push(newMovie)
+    res.status(201).send({ data: newMovie })
+})</code></pre>
+<p>
+        POST method with HTTP status code and auto incrementation.
+</p>
+<pre><code>app.patch("/movies/:id", (req, res) => {
+    const movieId = Number(req.params.id)
+    const foundMovieIndex = movies.findIndex(movie => movie.id === movieId)
+
+    if (foundMovieIndex === -1) {
+        return res.status(404).send({ errorMessage: "Movie not found" })
+    }
+
+    const updatedMovie = { ...movies[foundMovieIndex], ...req.body }
+    movies[foundMovieIndex] = updatedMovie
+
+    res.send({ data: updatedMovie })
+})</code></pre>
+<p>
+        PATCH method with error handling.
+</p>
+<pre><code>app.delete("/movies/:id", (req, res) => {
+    const movieId = Number(req.params.id)
+    const foundMovieIndex = movies.findIndex(movie => movie.id === movieId)
+
+    if (foundMovieIndex === -1) {
+        return res.status(404).send({ errorMessage: "Movie not found" })
+    }
+
+    movies.splice(foundMovieIndex, 1)
+    res.send({ message: "Movie deleted" })
+})</code></pre>
+<p>
+        DELETE method which checks if movie even exists.
+</p>
+<pre><code>app.listen(8080, () => {
+    console.log("Server is running on port 8080")
+})</code></pre>
+<p>
+        This is an example of full CRUD for the resource "movies", which we made in week 3.
+</p>
+
+</section>
+
+<section class="topics">
+
+<h2>Fetch Requests</h2>
+
+<p>
+We can use <code>fetch()</code> in the browser to communicate with our backend.<br>
+Below is an example of fetching movies from our Express server and displaying them on the page.
+</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Movies&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Movies&lt;/h1&gt;
+
+    &lt;h3 id="movie-output"&gt;&lt;/h3&gt;
+
+    &lt;script&gt;
+        fetch('/movies')
+        .then((response) =&gt; response.json())
+        .then((result) =&gt; {
+            const output = document.getElementById('movie-output')
+
+            output.textContent = JSON.stringify(result.data)
+        });
+    &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>
+The request fetches data from the server and displays it on the page through the "movie-output" id.
+</p>
+
+</section>
+
+<section class="topics">
+<h2>Date</h2>
+
+<p>
+JavaScript has a built-in <code>Date</code> object which can be used to get the current date and time.
+</p>
+
+<pre><code>console.log(new Date()) // Current date and time
+console.log(Date()) // Current local date as a string
+console.log(Date.now()) // Milliseconds since January 1st 1970</code></pre>
+
+<p>
+We can also extract specific parts of the date, by manually mapping the value to an index of an array, which corresponds to the month or day:
+</p>
+
+<pre><code>const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+const currentMonth = new Date().getMonth()
+const currentDay = new Date().getDay()
+
+console.log(months[currentMonth])
+console.log(days[currentDay])</code></pre>
+
+<p>
+Or we can use <code>toLocaleString()</code> to automatically extract the date and time :
+</p>
+
+<pre><code>console.log(new Date().toLocaleString("default", { month: "long" }))
+console.log(new Date().toLocaleString("default", { weekday: "long" }))</code></pre>
+
+</section>

@@ -39,3 +39,8 @@ const week6 = readPage('./public/pages/documentation/week6.html')
 export const week6Page = constructPage(week6, {
     documentTitle: "Niko's Node.js Documentation | Week 6"
 })
+
+const week7 = readPage('./public/pages/documentation/week7.html')
+export const week7Page = constructPage(week7, {
+    documentTitle: "Niko's Node.js Documentation | Week 7"
+})
